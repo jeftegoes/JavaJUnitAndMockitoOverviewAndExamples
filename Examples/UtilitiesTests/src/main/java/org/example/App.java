@@ -1,8 +1,5 @@
 package org.example;
 
-/**
- * Hello world!
- */
 public class App {
     public static void main(String[] args) {
         Utilities utilities = new Utilities();

@@ -1,4 +1,4 @@
-package org.example;
+package org.example.entities;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,7 +14,7 @@ public class BankAccountTestParameterized {
     private BankAccount bankAccount;
 
     @BeforeEach
-    public void setup() {
+    public void setUp() {
         this.bankAccount = new BankAccount("Jefté", "Goes", 1000, BankAccount.CHECKING);
         System.out.println("Running a test...");
     }

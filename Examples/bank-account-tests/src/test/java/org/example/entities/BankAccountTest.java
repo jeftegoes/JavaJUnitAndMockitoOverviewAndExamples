@@ -1,8 +1,6 @@
-package org.example;
+package org.example.entities;
 
 import org.junit.jupiter.api.*;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class BankAccountTest {
     private BankAccount bankAccount;
@@ -14,7 +12,7 @@ public class BankAccountTest {
     }
 
     @BeforeEach
-    public void setup() {
+    public void setUp() {
         this.bankAccount = new BankAccount("Jefté", "Goes", 1000, BankAccount.CHECKING);
         System.out.println("Running a test...");
     }
@@ -22,18 +20,18 @@ public class BankAccountTest {
     @Test
     public void deposit() {
         double balance = bankAccount.deposit(200, true);
-        assertEquals(1200, balance, 0);
+        Assertions.assertEquals(1200, balance, 0);
     }
 
     @Test
     public void withdraw() {
         double balance = bankAccount.withdraw(600.00, true);
-        assertEquals(400.00, balance, 0);
+        Assertions.assertEquals(400.00, balance, 0);
     }
 
     @Test
     public void withdraw_notBranch() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
             double balance = bankAccount.withdraw(600.00, false);
         });
     }
@@ -41,18 +39,18 @@ public class BankAccountTest {
     @Test
     public void getBalance_deposit() {
         bankAccount.deposit(200, true);
-        assertEquals(1200, bankAccount.getBalance(), 0);
+        Assertions.assertEquals(1200, bankAccount.getBalance(), 0);
     }
 
     @Test
     public void getBalance_withdraw() {
         bankAccount.withdraw(200, true);
-        assertEquals(800, bankAccount.getBalance(), 0);
+        Assertions.assertEquals(800, bankAccount.getBalance(), 0);
     }
 
     @Test
     public void isChecking_true() {
-        assertTrue(bankAccount.isChecking(), "The account is NOT a checking account!");
+        Assertions.assertTrue(bankAccount.isChecking(), "The account is NOT a checking account!");
     }
 
     @AfterAll

@@ -71,3 +71,26 @@
         <scope>test</scope>
     </dependency>
 ```
+
+## 2.4. Annotations
+
+- `@ExtendWith(MockitoExtension.class)` - To the test class and annotating mocked fields with `@Mock`.
+  - `@RunWith(MockitoJUnitRunner.class)` - JUnit 4
+- `@InjectMocks` - Creates an instance of the class and injects the mocks that are created with the `@Mock` (or `@Spy`) annotations into this instance.
+- `@Mock` - Creates a mock implementation for the classes we need.
+- **Example**
+
+  ```java
+    @ExtendWith(MockitoExtension.class)
+    public class ExampleClassTest {
+        @InjectMocks
+        MyServiceToBeTested myServiceToBeTested;
+
+        @Mock
+        MyDependency myDependency;
+    }
+  ```
+
+  ![Mock and InjectMock](Images/MockAndInjectMock.png)
+
+## asd

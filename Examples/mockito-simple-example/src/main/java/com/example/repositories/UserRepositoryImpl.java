@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UserRepositoryImpl implements UserRepository {
-    Map<String, User> users = new HashMap<>();
+    private Map<String, User> users = new HashMap<>();
 
     @Override
     public boolean save(User user) {

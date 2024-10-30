@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("Last name is empty.");
         }
 
-        User user = new User(firstName, lastName, email, UUID.randomUUID().toString());
+        User user = new User(UUID.randomUUID().toString(), firstName, lastName, email);
 
         boolean isUserCreated;
 

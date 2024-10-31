@@ -1,9 +1,7 @@
 package com.example.services;
 
 import com.example.models.User;
-import com.example.repositories.UserRepository;
 import com.example.repositories.UserRepositoryImpl;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,8 +10,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -41,9 +37,11 @@ public class UserServiceTest {
         repeatPassword = "123456789";
     }
 
-    @DisplayName("User object created")
+    @DisplayName("User object created.")
     @Test
     public void saveCorrectlyTest() {
+        Mockito.when(userRepository.save(Mockito.any(User.class))).thenReturn(true);
+
         User user = userService.createUser(firstName, lastName, email, password, repeatPassword);
 
         assertNotNull(user, "The createUser() should not have returned null.");
@@ -51,5 +49,29 @@ public class UserServiceTest {
         assertEquals(lastName, user.getLastName(), "Last name is incorrect");
         assertEquals(email, user.getEmail(), "Email is incorrect.");
         assertNotNull(user.getId(), "User id is missing.");
+
+        Mockito.verify(userRepository, Mockito.times(1)).save(Mockito.any(User.class));
+    }
+
+    @DisplayName("When userRepository.save() returns false and throw IllegalArgumentException.")
+    @Test
+    public void didNotSaveCorrectlyAndThrowExceptionTest() {
+        Mockito.when(userRepository.save(Mockito.any(User.class))).thenThrow(RuntimeException.class);
+
+        assertThrows(IllegalArgumentException.class,
+                () -> userService.createUser(firstName, lastName, email, password, repeatPassword));
+
+        Mockito.verify(userRepository, Mockito.times(1)).save(Mockito.any(User.class));
+    }
+
+    @DisplayName("User did not save correctly.")
+    @Test
+    public void didNotSaveCorrectlyTest() {
+        Mockito.when(userRepository.save(Mockito.any(User.class))).thenReturn(false);
+
+        assertThrows(IllegalArgumentException.class,
+                () -> userService.createUser(firstName, lastName, email, password, repeatPassword));
+
+        Mockito.verify(userRepository, Mockito.times(1)).save(Mockito.any(User.class));
     }
 }

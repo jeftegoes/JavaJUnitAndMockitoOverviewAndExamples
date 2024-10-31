@@ -29,8 +29,11 @@ public class UserServiceImpl implements UserService {
         try {
             isUserCreated = userRepository.save(user);
         } catch (RuntimeException ex) {
-            throw new IllegalArgumentException("Could not create user.");
+            throw new IllegalArgumentException(ex.getMessage());
         }
+
+        if (!isUserCreated)
+            throw new IllegalArgumentException("Could not create user.");
 
         return user;
     }
